@@ -32,6 +32,7 @@ namespace Snake_csharp
             { Direction.Right, 90 },
         };
         private readonly int rows = 15, cols = 15;
+        private int ScoreRekord = 0;
         private readonly Image[,] gridImages;
         private GameState gameState;
         private bool gameRunning = false;
@@ -73,15 +74,19 @@ namespace Snake_csharp
             switch (e.Key)
             {
                 case Key.Left:
+                case Key.A:
                     gameState.ChangeDirection(Direction.Left);
                     break;
                 case Key.Right:
+                case Key.D:
                     gameState.ChangeDirection(Direction.Right);
                     break;
                 case Key.Up:
+                case Key.W:
                     gameState.ChangeDirection(Direction.Up);
                     break;
                 case Key.Down:
+                case Key.S:
                     gameState.ChangeDirection(Direction.Down);
                     break;
             }
@@ -96,6 +101,7 @@ namespace Snake_csharp
                 Draw();
             }
         }
+
         private Image[,] SetupGrid()
         {
             Image[,] images = new Image[rows, cols];
@@ -121,7 +127,7 @@ namespace Snake_csharp
         {
             DrawGrid();
             DrawSnakeHead();
-            ScoreText.Text = $"Score {gameState.Score}";
+            ScoreText.Text = $"Score: {gameState.Score}|Rekord: {ScoreRekord}";
         }
         private void DrawGrid()
         {
@@ -172,7 +178,16 @@ namespace Snake_csharp
         {
             await DrawDeadSnake();
             OverlayText.Text = "Game Over!\nPress any key to restart";
+            SetRekord();
             Overlay.Visibility = Visibility.Visible;
+        }
+        private void SetRekord()
+        {
+            if (gameState.Score > ScoreRekord)
+            {
+                ScoreRekord = gameState.Score;
+                OverlayText.Text = "New Rekord!\nPress any key to restart";
+            }
         }
     }
 }
