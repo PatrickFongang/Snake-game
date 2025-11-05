@@ -6,5 +6,5 @@ namespace Snake_csharp;
         Snake,
         Food,
         Outside
-}
+    }
 

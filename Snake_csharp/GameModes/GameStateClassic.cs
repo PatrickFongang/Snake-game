@@ -7,19 +7,19 @@ using System.Windows;
 
 namespace Snake_csharp
 {
-    public class GameState
+    public class GameStateClassic
     {
         public int Rows { get; }
         public int Cols { get; }
         public GridValue[,] Grid { get; }
-        public Direction Dir { get; private set; }
-        public int Score { get; private set; }
-        public bool GameOver { get; private set; }
+        public Direction Dir { get; protected set; }
+        public int Score { get; protected set; }
+        public bool GameOver { get; protected set; }
 
-        private readonly LinkedList<Direction> dirChanges = new LinkedList<Direction>();
-        private readonly LinkedList<Position> snakePositions = new LinkedList<Position>();
+        protected readonly LinkedList<Direction> dirChanges = new LinkedList<Direction>();
+        protected readonly LinkedList<Position> snakePositions = new LinkedList<Position>();
         private readonly Random random = new Random();
-        public GameState(int rows, int cols)
+        public GameStateClassic(int rows, int cols)
         {
             Rows = rows;
             Cols = cols;
@@ -52,7 +52,7 @@ namespace Snake_csharp
             }
         }
 
-        private void AddFood()
+        protected void AddFood()
         {
             List<Position> empty = new List<Position>(EmptyPositions());
 
@@ -63,27 +63,18 @@ namespace Snake_csharp
             Grid[pos.Row, pos.Col] = GridValue.Food;
         }
 
-        public Position HeadPosition()
-        {
-            return snakePositions.First.Value;
-        }
+        public Position HeadPosition() => snakePositions.First.Value;
 
-        public Position TailPosition()
-        {
-            return snakePositions.Last.Value;
-        }
+        public Position TailPosition() => snakePositions.Last.Value;
 
-        public IEnumerable<Position> SnakePositions()
-        {
-            return snakePositions;
-        }
+        public IEnumerable<Position> SnakePositions() => snakePositions;
 
-        private void AddHead(Position pos)
+        protected void AddHead(Position pos)
         {
             snakePositions.AddFirst(pos);
             Grid[pos.Row, pos.Col] = GridValue.Snake;
         }
-        private void RemoveTail()
+        protected void RemoveTail()
         {
             Position tail = snakePositions.Last.Value;
             Grid[tail.Row, tail.Col] = GridValue.Empty;
@@ -130,7 +121,7 @@ namespace Snake_csharp
 
             return Grid[newHeadPos.Row, newHeadPos.Col];
         }
-        public void Move()
+        public virtual void Move()
         {
             if (dirChanges.Count>0)
             {

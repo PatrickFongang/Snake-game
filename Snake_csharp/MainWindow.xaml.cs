@@ -34,13 +34,13 @@ namespace Snake_csharp
         private readonly int rows = 15, cols = 15;
         private int ScoreRekord = 0;
         private readonly Image[,] gridImages;
-        private GameState gameState;
+        private GameStateClassic gameState;
         private bool gameRunning = false;
         public MainWindow()
         {
             InitializeComponent();
             gridImages = SetupGrid();
-            gameState = new GameState(rows, cols);
+            gameState = new GameStateThroughWalls(rows, cols);
         }
 
         private async Task Rungame()
@@ -50,7 +50,7 @@ namespace Snake_csharp
             Overlay.Visibility = Visibility.Hidden;
             await GameLoop();
             await ShowGameOver();
-            gameState = new GameState(rows, cols);
+            gameState = new GameStateThroughWalls(rows, cols);
         }
 
         private async void Window_PreviewKeyDown(object sender, KeyEventArgs e)
