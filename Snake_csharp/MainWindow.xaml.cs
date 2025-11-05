@@ -43,7 +43,7 @@ namespace Snake_csharp
         {
             InitializeComponent();
             gridImages = SetupGrid();
-            gameState = new GameStatePortal(rows, cols);
+            gameState = new GameStatePoison(rows, cols);
         }
 
         private async Task Rungame()
@@ -53,7 +53,7 @@ namespace Snake_csharp
             Overlay.Visibility = Visibility.Hidden;
             await GameLoop();
             await ShowGameOver();
-            gameState = new GameStatePortal(rows, cols);
+            gameState = new GameStatePoison(rows, cols);
         }
 
         private async void Window_PreviewKeyDown(object sender, KeyEventArgs e)
