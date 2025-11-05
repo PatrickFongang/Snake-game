@@ -77,7 +77,10 @@ namespace Snake_csharp
         protected void RemoveTail()
         {
             Position tail = snakePositions.Last.Value;
-            Grid[tail.Row, tail.Col] = GridValue.Empty;
+            if (snakePositions.Count(x=>x==tail)==1)
+            {
+                Grid[tail.Row, tail.Col] = GridValue.Empty;
+            }
             snakePositions.RemoveLast();
         }
         
@@ -123,24 +126,23 @@ namespace Snake_csharp
         }
         public virtual void Move()
         {
-            if (dirChanges.Count>0)
-            {
-                Dir = dirChanges.First.Value;
-                dirChanges.RemoveFirst();
-            }
             Position newHeadPos = HeadPosition().Translate(Dir);
             GridValue hit = WillHit(newHeadPos);
-
-            if(hit == GridValue.Outside || hit == GridValue.Snake)
+            if (snakePositions.Count == Rows * Cols)
             {
                 GameOver = true;
             }
-            else if(hit == GridValue.Empty)
+
+            if (hit == GridValue.Outside || hit == GridValue.Snake)
+            {
+                GameOver = true;
+            }
+            else if (hit == GridValue.Empty)
             {
                 RemoveTail();
                 AddHead(newHeadPos);
             }
-            else if(hit == GridValue.Food)
+            else if (hit == GridValue.Food)
             {
                 Score++;
                 AddHead(newHeadPos);

@@ -9,6 +9,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Snake_csharp;
 
 namespace Snake_csharp
 {
@@ -31,7 +32,7 @@ namespace Snake_csharp
             { Direction.Left, 270 },
             { Direction.Right, 90 },
         };
-        private readonly int rows = 15, cols = 15;
+        private readonly int rows = 5, cols = 5;
         private int ScoreRekord = 0;
         private readonly Image[,] gridImages;
         private GameStateClassic gameState;
@@ -40,7 +41,7 @@ namespace Snake_csharp
         {
             InitializeComponent();
             gridImages = SetupGrid();
-            gameState = new GameStateThroughWalls(rows, cols);
+            gameState = new GameStateImmortal(rows, cols);
         }
 
         private async Task Rungame()
@@ -50,7 +51,7 @@ namespace Snake_csharp
             Overlay.Visibility = Visibility.Hidden;
             await GameLoop();
             await ShowGameOver();
-            gameState = new GameStateThroughWalls(rows, cols);
+            gameState = new GameStateImmortal(rows, cols);
         }
 
         private async void Window_PreviewKeyDown(object sender, KeyEventArgs e)
