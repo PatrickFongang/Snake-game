@@ -5,6 +5,8 @@ namespace Snake_csharp;
         Empty,
         Snake,
         Food,
+        Poison,
+        Portal,
         Outside
     }
 

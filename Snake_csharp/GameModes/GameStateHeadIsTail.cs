@@ -40,7 +40,6 @@ namespace Snake_csharp
                 Dir = NewHeadDirection(snakePositions);
                 AddHead(newHeadPos);
                 snakePositions = new LinkedList<Position>(snakePositions.Reverse());
-                //snakePositions.Reverse();
                 AddFood();
             }
         }

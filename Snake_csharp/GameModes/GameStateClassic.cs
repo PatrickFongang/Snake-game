@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Navigation;
 
 namespace Snake_csharp
 {
@@ -18,7 +19,7 @@ namespace Snake_csharp
 
         protected readonly LinkedList<Direction> dirChanges = new LinkedList<Direction>();
         protected LinkedList<Position> snakePositions = new LinkedList<Position>();
-        private readonly Random random = new Random();
+        protected readonly Random random = new Random();
         public GameStateClassic(int rows, int cols)
         {
             Rows = rows;
@@ -38,7 +39,7 @@ namespace Snake_csharp
                 snakePositions.AddFirst(new Position(r, c));
             }
         }
-        private IEnumerable<Position> EmptyPositions()
+        protected IEnumerable<Position> EmptyPositions()
         {
             for (int r = 0; r < Rows; r++)
             {

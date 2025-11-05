@@ -23,6 +23,8 @@ namespace Snake_csharp
             { GridValue.Empty, Images.Empty },
             { GridValue.Snake, Images.Body },
             { GridValue.Food, Images.Food },
+            { GridValue.Portal, Images.Portal },
+            { GridValue.Poison, Images.Poison },
         };
 
         private readonly Dictionary<Direction, int> dirToRotation = new()
@@ -41,7 +43,7 @@ namespace Snake_csharp
         {
             InitializeComponent();
             gridImages = SetupGrid();
-            gameState = new GameStateHeadIsTail(rows, cols);
+            gameState = new GameStatePortal(rows, cols);
         }
 
         private async Task Rungame()
@@ -51,7 +53,7 @@ namespace Snake_csharp
             Overlay.Visibility = Visibility.Hidden;
             await GameLoop();
             await ShowGameOver();
-            gameState = new GameStateHeadIsTail(rows, cols);
+            gameState = new GameStatePortal(rows, cols);
         }
 
         private async void Window_PreviewKeyDown(object sender, KeyEventArgs e)

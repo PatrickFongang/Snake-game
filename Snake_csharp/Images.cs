@@ -12,6 +12,8 @@ namespace Snake_csharp
         public readonly static ImageSource Food = LoadImage("Food.png");
         public readonly static ImageSource DeadBody = LoadImage("DeadBody.png");
         public readonly static ImageSource DeadHead = LoadImage("DeadHead.png");
+        public readonly static ImageSource Portal = LoadImage("Portal.png");
+        public readonly static ImageSource Poison = LoadImage("Poison.png");
         private static ImageSource LoadImage(string filename)
         {
             return new BitmapImage(new Uri($"Assets/{filename}", UriKind.Relative));
