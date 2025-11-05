@@ -5,6 +5,7 @@
         Classic,
         ThroughWalls,
         Imortal,
+        HeadIsTail,
         Portal,
         Poison,
         TwoSnakes

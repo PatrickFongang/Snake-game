@@ -8,7 +8,7 @@ namespace Snake_csharp;
         public static readonly Direction Right = new Direction(0, 1);
         public int RowOffset { get; }
         public int ColOffset { get; }
-        private Direction(int rowOffset, int colOffset)
+        public Direction(int rowOffset, int colOffset)
         {
             RowOffset = rowOffset;
             ColOffset = colOffset;

@@ -1,5 +1,7 @@
 ﻿
 
+using System.CodeDom;
+
 namespace Snake_csharp
 {
     public class Position
@@ -36,6 +38,11 @@ namespace Snake_csharp
         public static bool operator !=(Position left, Position right)
         {
             return !(left == right);
+        }
+
+        public static Direction operator -(Position a, Position b)
+        {
+            return new Direction(a.Row - b.Row, a.Col - b.Col);
         }
     }
 }

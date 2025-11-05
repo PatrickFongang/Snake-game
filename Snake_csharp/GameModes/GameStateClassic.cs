@@ -17,7 +17,7 @@ namespace Snake_csharp
         public bool GameOver { get; protected set; }
 
         protected readonly LinkedList<Direction> dirChanges = new LinkedList<Direction>();
-        protected readonly LinkedList<Position> snakePositions = new LinkedList<Position>();
+        protected LinkedList<Position> snakePositions = new LinkedList<Position>();
         private readonly Random random = new Random();
         public GameStateClassic(int rows, int cols)
         {
@@ -126,6 +126,11 @@ namespace Snake_csharp
         }
         public virtual void Move()
         {
+            if (dirChanges.Count > 0)
+            {
+                Dir = dirChanges.First.Value;
+                dirChanges.RemoveFirst();
+            }
             Position newHeadPos = HeadPosition().Translate(Dir);
             GridValue hit = WillHit(newHeadPos);
             if (snakePositions.Count == Rows * Cols)
