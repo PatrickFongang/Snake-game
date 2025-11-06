@@ -48,20 +48,80 @@
             </Border>
 
             <Border x:Name="Overlay"
-                    Grid.Row="1"
-                    Background="{StaticResource OverlayColor}"
-                    Width="{Binding Path=ActualWidth, ElementName=GridBorder}"
-                    Height="{Binding Path=ActualHeight, ElementName=GridBorder}"
-                    RenderOptions.EdgeMode="Aliased">
-                <TextBlock x:Name="OverlayText"
+        Grid.Row="1"
+        Background="{StaticResource OverlayColor}"
+        Width="{Binding Path=ActualWidth, ElementName=GridBorder}"
+        Height="{Binding Path=ActualHeight, ElementName=GridBorder}"
+        RenderOptions.EdgeMode="Aliased">
+
+                <Grid>
+                    <!-- Menu -->
+                    <StackPanel x:Name="MenuPanel"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Visibility="Visible">
+
+                        <TextBlock Text="Chose Mode"
                            FontSize="26"
                            FontWeight="Bold"
+                           Foreground="White"
                            HorizontalAlignment="Center"
-                           VerticalAlignment="Center"
-                           Text="PRESS ANY KEY TO START"
-                           TextAlignment="Center"
-                           TextWrapping="Wrap"/>
+                           Margin="0,0,0,20"/>
+
+                        <ListBox x:Name="ModeList"
+                             Width="200"
+                             BorderThickness="0"
+                             Background="Transparent"
+                             Foreground="White"
+                             FontSize="20"
+                             HorizontalAlignment="Center"
+                             SelectionChanged="ModeList_SelectionChanged"
+                             KeyDown="ModeList_KeyDown">
+
+                            <ListBoxItem Content="Classic" Tag="0"/>
+                            <ListBoxItem Content="Through Walls" Tag="1"/>
+                            <ListBoxItem Content="Immortal" Tag="2"/>
+                            <ListBoxItem Content="Head Is Tail" Tag="3"/>
+                            <ListBoxItem Content="Portal" Tag="4"/>
+                            <ListBoxItem Content="Poison" Tag="5"/>
+                            <ListBoxItem Content="TwoSnakes" Tag="6"/>
+                        </ListBox>
+                    </StackPanel>
+
+                    <!-- Press any -->
+                    <TextBlock x:Name="OverlayText"
+                   FontSize="26"
+                   FontWeight="Bold"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   Text="PRESS ANY KEY TO START"
+                   TextAlignment="Center"
+                   TextWrapping="Wrap"
+                   Visibility="Collapsed"/>
+                   <StackPanel x:Name="GameOverPanel"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Visibility="Collapsed">
+                        <TextBlock x:Name="GameOverText"
+                                  Text="GAME OVER"
+                       FontSize="30"
+                       FontWeight="Bold"
+                       Foreground="{StaticResource TextColor}"
+                       HorizontalAlignment="Center"
+                       Margin="0,0,0,20"/>
+                        <Button Content="Restart Game"
+                    Width="160" Height="40"
+                    Margin="0,0,0,10"
+                    Click="RestartSameMode"/>
+                        <Button Content="Change Mode"
+                    Width="160" Height="40"
+                    Click="ReturnToMenu"/>
+                    </StackPanel>
+                </Grid>
             </Border>
+
+
+
         </Grid>
     </Viewbox>
 </Window>

@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Net.Sockets;
+using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -35,26 +36,95 @@ namespace Snake_csharp
             { Direction.Left, 270 },
             { Direction.Right, 90 },
         };
-        private readonly int rows = 16, cols = 16;
-        private int HighScore = 0;
+        private readonly int rows = 15, cols = 16;
+        private Dictionary<GameModes, int> highScores;
         private readonly Image[,] gridImages;
         private GameStateClassic gameState;
         private bool gameRunning = false;
+        private GameModes currentMode = GameModes.Classic;
         public MainWindow()
         {
             InitializeComponent();
+            InitHighScores();
             gridImages = SetupGrid();
-            gameState = new GameStatePoison(rows, cols);
         }
 
         private async Task Rungame()
         {
+            gameState = ModeHandler(currentMode);
             Draw();
             await ShowCountDown();
             Overlay.Visibility = Visibility.Hidden;
             await GameLoop();
             await ShowGameOver();
-            gameState = new GameStateClassic(rows, cols);
+            
+        }
+
+        private GameStateClassic ModeHandler(GameModes mode)
+        {
+            return mode switch
+            {
+                GameModes.Classic => new GameStateClassic(rows, cols),
+                GameModes.Poison => new GameStatePoison(rows, cols),
+                GameModes.TwoSnakes => new GameStateTwoSnakes(rows, cols),
+                GameModes.Immortal => new GameStateImmortal(rows, cols),
+                GameModes.ThroughWalls => new GameStateThroughWalls(rows, cols),
+                GameModes.HeadIsTail => new GameStateHeadIsTail(rows, cols),
+                GameModes.Portal => new GameStatePortal(rows, cols),
+                _ => throw new Exception("Invalid Game Mode"),
+            };
+        }
+
+        private void ModeList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (ModeList.SelectedItem is ListBoxItem item)
+            {
+                int mode = int.Parse(item.Tag.ToString());
+                currentMode = (GameModes)mode;
+                ShowPressAnyKeyOverlay();
+            }
+        }
+
+        private void ModeList_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter && ModeList.SelectedItem is ListBoxItem item)
+            {
+                int mode = int.Parse(item.Tag.ToString());
+                currentMode = (GameModes)mode;
+                ShowPressAnyKeyOverlay();
+            }
+        }
+
+        private void ShowPressAnyKeyOverlay()
+        {
+            MenuPanel.Visibility = Visibility.Collapsed;
+            Overlay.Visibility = Visibility.Visible;
+            OverlayText.Text = "Press Any Key to Start";
+            OverlayText.Visibility = Visibility.Visible;
+        }
+
+        private void ShowGameOverScreen()
+        {
+            Overlay.Visibility = Visibility.Visible;
+
+            MenuPanel.Visibility = Visibility.Collapsed;
+            OverlayText.Visibility = Visibility.Collapsed;
+
+            GameOverPanel.Visibility = Visibility.Visible;
+        }
+
+        private void RestartSameMode(object sender, RoutedEventArgs e)
+        {
+            Overlay.Visibility = Visibility.Visible;
+            GameOverPanel.Visibility = Visibility.Collapsed;
+            ShowPressAnyKeyOverlay();
+        }
+
+        private void ReturnToMenu(object sender, RoutedEventArgs e)
+        {
+            GameOverPanel.Visibility = Visibility.Collapsed;
+            MenuPanel.Visibility = Visibility.Visible;
+
         }
 
         private async void Window_PreviewKeyDown(object sender, KeyEventArgs e)
@@ -63,7 +133,7 @@ namespace Snake_csharp
             {
                 e.Handled = true;
             }
-            if(!gameRunning)
+            if(!gameRunning && MenuPanel.Visibility != Visibility.Visible)
             {
                 gameRunning = true;
                 await Rungame();
@@ -132,7 +202,7 @@ namespace Snake_csharp
             DrawGrid();
             DrawSnakeHead();
             DrawSecondSnakeHead();
-            ScoreText.Text = $"Score: {gameState.Score}|High Score: {HighScore}";
+            ScoreText.Text = $"Score: {gameState.Score}|High Score: {highScores[currentMode]}";
         }
         private void DrawGrid()
         {
@@ -202,17 +272,24 @@ namespace Snake_csharp
         private async Task ShowGameOver()
         {
             await DrawDeadSnake();
-            OverlayText.Text = "Game Over!\nPress any key to restart";
             SetHighScore();
-            Overlay.Visibility = Visibility.Visible;
+            ShowGameOverScreen();
         }
         private void SetHighScore()
         {
-            if (gameState.Score > HighScore)
+            if (gameState.Score > highScores[currentMode])
             {
-                HighScore = gameState.Score;
-                OverlayText.Text = "New High Score!\nPress any key to restart";
+                highScores[currentMode] = gameState.Score;
+                GameOverText.Text = "New High Score!";
             }
         }
+        private void InitHighScores()
+        {
+            highScores = new Dictionary<GameModes, int>();
+            foreach (GameModes mode in Enum.GetValues(typeof(GameModes)))
+            {
+                highScores[mode] = 0;
+            }
+        }       
     }
 }

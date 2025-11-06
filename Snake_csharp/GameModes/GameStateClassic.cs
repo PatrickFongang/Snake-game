@@ -16,7 +16,7 @@ namespace Snake_csharp
         public Direction Dir { get; protected set; }
         public int Score { get; protected set; }
         public bool GameOver { get; protected set; }
-        public int NumberOfFoods = 4;
+        public int NumberOfFoods = 10;
 
         protected readonly LinkedList<Direction> dirChanges = new LinkedList<Direction>();
         protected LinkedList<Position> snakePositions = new LinkedList<Position>();

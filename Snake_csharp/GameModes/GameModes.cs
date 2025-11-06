@@ -4,7 +4,7 @@
     {
         Classic,
         ThroughWalls,
-        Imortal,
+        Immortal,
         HeadIsTail,
         Portal,
         Poison,
