@@ -133,7 +133,7 @@ namespace Snake_csharp
             {
                 e.Handled = true;
             }
-            if(!gameRunning && MenuPanel.Visibility != Visibility.Visible)
+            if(!gameRunning && MenuPanel.Visibility != Visibility.Visible && GameOverPanel.Visibility!=Visibility.Visible)
             {
                 gameRunning = true;
                 await Rungame();
