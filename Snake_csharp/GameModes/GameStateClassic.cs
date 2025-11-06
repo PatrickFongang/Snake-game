@@ -30,7 +30,7 @@ namespace Snake_csharp
             Dir = Direction.Right;
         }
 
-        private void AddSnake()
+        protected virtual void AddSnake()
         {
             int r = Rows / 2;
             for (int c = 1; c <= 3; c++)
@@ -65,10 +65,12 @@ namespace Snake_csharp
         }
 
         public Position HeadPosition() => snakePositions.First.Value;
+        public virtual Position SecondHeadPosition() => null;
 
         public Position TailPosition() => snakePositions.Last.Value;
 
         public IEnumerable<Position> SnakePositions() => snakePositions;
+        public virtual IEnumerable<Position> SecondSnakePositions() => null;
 
         protected void AddHead(Position pos)
         {

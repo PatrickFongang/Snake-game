@@ -22,6 +22,7 @@ namespace Snake_csharp
         {
             { GridValue.Empty, Images.Empty },
             { GridValue.Snake, Images.Body },
+            { GridValue.SecondSnake, Images.SecondBody },
             { GridValue.Food, Images.Food },
             { GridValue.Portal, Images.Portal },
             { GridValue.Poison, Images.Poison },
@@ -34,7 +35,7 @@ namespace Snake_csharp
             { Direction.Left, 270 },
             { Direction.Right, 90 },
         };
-        private readonly int rows = 15, cols = 15;
+        private readonly int rows = 16, cols = 16;
         private int ScoreRekord = 0;
         private readonly Image[,] gridImages;
         private GameStateClassic gameState;
@@ -43,7 +44,7 @@ namespace Snake_csharp
         {
             InitializeComponent();
             gridImages = SetupGrid();
-            gameState = new GameStatePoison(rows, cols);
+            gameState = new GameStateTwoSnakes(rows, cols);
         }
 
         private async Task Rungame()
@@ -53,7 +54,7 @@ namespace Snake_csharp
             Overlay.Visibility = Visibility.Hidden;
             await GameLoop();
             await ShowGameOver();
-            gameState = new GameStatePoison(rows, cols);
+            gameState = new GameStateTwoSnakes(rows, cols);
         }
 
         private async void Window_PreviewKeyDown(object sender, KeyEventArgs e)
@@ -130,6 +131,7 @@ namespace Snake_csharp
         {
             DrawGrid();
             DrawSnakeHead();
+            DrawSecondSnakeHead();
             ScoreText.Text = $"Score: {gameState.Score}|Rekord: {ScoreRekord}";
         }
         private void DrawGrid()
@@ -155,15 +157,35 @@ namespace Snake_csharp
             image.RenderTransform = new RotateTransform(rotation);
         }
 
+        private void DrawSecondSnakeHead()
+        {
+            Position secondHeadPos = gameState.SecondHeadPosition();
+            if (secondHeadPos != null)
+            {
+                Image secondImage = gridImages[secondHeadPos.Row, secondHeadPos.Col];
+                secondImage.Source = Images.SecondHead;
+                int secondRotation = dirToRotation[gameState.Dir.Opposite()];
+                secondImage.RenderTransform = new RotateTransform(secondRotation);
+            }
+        }
+
         private async Task DrawDeadSnake()
         {
             List<Position> positions = new List<Position>(gameState.SnakePositions());
+            List<Position> secondPositions = gameState.SecondSnakePositions() != null ?
+                new List<Position>(gameState.SecondSnakePositions()) : null;
 
             for (int i = 0; i < positions.Count; i++)
             {
                 Position pos = positions[i];
                 ImageSource source = (i == 0) ? Images.DeadHead : Images.DeadBody;
                 gridImages[pos.Row, pos.Col].Source = source;
+                if (secondPositions != null)
+                {
+                    pos = secondPositions[i];
+                    source = (i == 0) ? Images.SecondDeadHead : Images.SecondDeadBody;
+                    gridImages[pos.Row, pos.Col].Source = source;
+                }
                 await Task.Delay(50);
             }
         }

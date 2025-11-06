@@ -17,6 +17,12 @@
     <None Remove="Assets\Food.png" />
     <None Remove="Assets\Head.png" />
     <None Remove="Assets\icon.ico" />
+    <None Remove="Assets\Poison.png" />
+    <None Remove="Assets\Portal.png" />
+    <None Remove="Assets\SecondBody.png" />
+    <None Remove="Assets\SecondDeadBody.png" />
+    <None Remove="Assets\SecondDeadHead.png" />
+    <None Remove="Assets\SecondHead.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -28,6 +34,16 @@
     <Resource Include="Assets\Food.png" />
     <Resource Include="Assets\Head.png" />
     <Resource Include="Assets\icon.ico" />
+    <Resource Include="Assets\Poison.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Portal.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\SecondBody.png" />
+    <Resource Include="Assets\SecondDeadBody.png" />
+    <Resource Include="Assets\SecondDeadHead.png" />
+    <Resource Include="Assets\SecondHead.png" />
   </ItemGroup>
 
 </Project>
