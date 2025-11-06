@@ -36,7 +36,7 @@ namespace Snake_csharp
             { Direction.Right, 90 },
         };
         private readonly int rows = 16, cols = 16;
-        private int ScoreRekord = 0;
+        private int HighScore = 0;
         private readonly Image[,] gridImages;
         private GameStateClassic gameState;
         private bool gameRunning = false;
@@ -44,7 +44,7 @@ namespace Snake_csharp
         {
             InitializeComponent();
             gridImages = SetupGrid();
-            gameState = new GameStateTwoSnakes(rows, cols);
+            gameState = new GameStatePoison(rows, cols);
         }
 
         private async Task Rungame()
@@ -54,7 +54,7 @@ namespace Snake_csharp
             Overlay.Visibility = Visibility.Hidden;
             await GameLoop();
             await ShowGameOver();
-            gameState = new GameStateTwoSnakes(rows, cols);
+            gameState = new GameStateClassic(rows, cols);
         }
 
         private async void Window_PreviewKeyDown(object sender, KeyEventArgs e)
@@ -132,7 +132,7 @@ namespace Snake_csharp
             DrawGrid();
             DrawSnakeHead();
             DrawSecondSnakeHead();
-            ScoreText.Text = $"Score: {gameState.Score}|Rekord: {ScoreRekord}";
+            ScoreText.Text = $"Score: {gameState.Score}|High Score: {HighScore}";
         }
         private void DrawGrid()
         {
@@ -203,15 +203,15 @@ namespace Snake_csharp
         {
             await DrawDeadSnake();
             OverlayText.Text = "Game Over!\nPress any key to restart";
-            SetRekord();
+            SetHighScore();
             Overlay.Visibility = Visibility.Visible;
         }
-        private void SetRekord()
+        private void SetHighScore()
         {
-            if (gameState.Score > ScoreRekord)
+            if (gameState.Score > HighScore)
             {
-                ScoreRekord = gameState.Score;
-                OverlayText.Text = "New Rekord!\nPress any key to restart";
+                HighScore = gameState.Score;
+                OverlayText.Text = "New High Score!\nPress any key to restart";
             }
         }
     }

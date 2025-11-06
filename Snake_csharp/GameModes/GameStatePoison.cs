@@ -10,7 +10,8 @@ namespace Snake_csharp
     {
         public GameStatePoison(int rows, int cols) : base(rows, cols)
         {
-            AddPoison();
+            for(int i = 0; i < NumberOfFoods; i++)
+                AddPoison();
         }
 
         public override void Move()

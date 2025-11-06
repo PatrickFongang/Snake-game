@@ -16,6 +16,7 @@ namespace Snake_csharp
         public Direction Dir { get; protected set; }
         public int Score { get; protected set; }
         public bool GameOver { get; protected set; }
+        public int NumberOfFoods = 4;
 
         protected readonly LinkedList<Direction> dirChanges = new LinkedList<Direction>();
         protected LinkedList<Position> snakePositions = new LinkedList<Position>();
@@ -26,7 +27,8 @@ namespace Snake_csharp
             Cols = cols;
             Grid = new GridValue[rows, cols];
             AddSnake();
-            AddFood();
+            for (int i = 0; i < NumberOfFoods; i++)
+                AddFood();
             Dir = Direction.Right;
         }
 

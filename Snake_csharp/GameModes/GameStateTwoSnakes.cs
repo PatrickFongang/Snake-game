@@ -57,7 +57,7 @@ namespace Snake_csharp
                 GameOver = true;
             }
 
-            if (GameOverIfCollision(hits.First,hits.Second))
+            if (GameOverIfCollision(hits.First, hits.Second))
             {
                 GameOver = true;
             }
@@ -67,8 +67,8 @@ namespace Snake_csharp
                 AddHead(newHeadPos);
                 AddSecondHead(newSecondHeadPos);
                 AddFood();
-                
-            }
+                CheckIfBothAteFood(hits.First, hits.Second, newHeadPos, newSecondHeadPos);
+            }            
             else
             {
                 RemoveTail();
@@ -82,6 +82,16 @@ namespace Snake_csharp
             return first == GridValue.Outside || first == GridValue.Snake ||
                    second == GridValue.Outside || second == GridValue.SecondSnake
                    || first == GridValue.SecondSnake || second == GridValue.Snake;
+        }
+        private void CheckIfBothAteFood(GridValue first, GridValue second, Position newHeadPos, Position newSecondHeadPos)
+        {
+            if (first==second)
+            {
+                Score++;
+                AddHead(newHeadPos);
+                AddSecondHead(newSecondHeadPos);
+                AddFood();
+            }
         }
 
     }
