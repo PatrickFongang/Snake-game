@@ -56,7 +56,7 @@ This version introduces several exciting twists on the classic formula:
 1.  Ensure you have the .NET Desktop Development workload installed in Visual Studio.
 2.  Clone this repository:
     ```bash
-    git clone [https://github.com/PatrickFongang/Snake-game.git](https://github.com/PatrickFongang/Snake-game.git)
+    git clone https://github.com/PatrickFongang/Snake-game.git
     ```
 3.  Open the solution file (`.sln`) in Visual Studio.
 4.  Build the solution (Ctrl+Shift+B).
