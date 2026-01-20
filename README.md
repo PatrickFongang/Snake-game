@@ -36,7 +36,7 @@ This version introduces several exciting twists on the classic formula:
     Two distinct portals spawn on the map. Entering one instantly teleports the snake's head to the other portal's location.
 
 * **🔄 Head is Tail:**
-    A disorienting challenge inspired by Google Snake. Every time the snake eats an apple, its head and tail instantly swap positions.
+    A disorienting challenge. Every time the snake eats an apple, its head and tail instantly swap positions.
 
 * **👯 Two Snakes (Mirror Mode):**
     Control two snakes simultaneously! A second snake appears on the board and moves in the exact mirror opposite direction of your inputs. Don't let either snake crash!
