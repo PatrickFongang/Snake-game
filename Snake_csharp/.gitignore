@@ -1,0 +1,40 @@
+## --- Visual Studio ---
+.vs/
+[Bb]in/
+[Oo]bj/
+*.user
+*.userosscache
+*.sln.docstates
+*.suo
+
+## --- NuGet Packages ---
+packages/
+*.nuget.props
+*.nuget.targets
+
+## --- Build Output & Artifacts ---
+*.exe
+*.dll
+*.pdb
+*.msi
+*.nupkg
+*.vshost.exe
+*.vshost.exe.config
+*.vshost.exe.manifest
+*.log
+
+## --- Test Results ---
+TestResults/
+*.visualstudio.testsales
+
+## --- IDE Specific (JetBrains Rider / ReSharper) ---
+_ReSharper*/
+*.resharper
+*.Rider*/
+.idea/
+
+## --- OS Generated Files ---
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+.DS_Store
